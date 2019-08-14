@@ -42,10 +42,12 @@ class XMLDataset(CustomDataset):
         labels = []
         bboxes_ignore = []
         labels_ignore = []
+        difficult = False
+        self.cat2label = {k.lstrip().rstrip(): v for k, v in self.cat2label.items()}
         for obj in root.findall('object'):
             name = obj.find('name').text
             label = self.cat2label[name]
-            difficult = int(obj.find('difficult').text)
+            # difficult = int(obj.find('difficult').text)
             bnd_box = obj.find('bndbox')
             bbox = [
                 int(bnd_box.find('xmin').text),
